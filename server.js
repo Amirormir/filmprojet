@@ -109,6 +109,34 @@ app.use('/api/films', filmsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/reviews', reviewsRoutes);
 
+// Route pour récupérer les détails d'un film avec ses avis
+app.get('/film/:id', (req, res) => {
+  const filmId = req.params.id;
+
+  // Récupérer les détails du film
+  connection.query('SELECT * FROM films WHERE id = ?', [filmId], (err, filmResult) => {
+    if (err) {
+      console.error('Erreur lors de la récupération du film:', err);
+      return res.status(500).send('Erreur serveur');
+    }
+
+    if (filmResult.length === 0) {
+      return res.status(404).send('Film non trouvé');
+    }
+
+    // Récupérer les avis associés à ce film
+    connection.query('SELECT * FROM avis WHERE film_id = ?', [filmId], (err, avisResult) => {
+      if (err) {
+        console.error('Erreur lors de la récupération des avis:', err);
+        return res.status(500).send('Erreur serveur');
+      }
+
+      // Envoyer les informations du film et les avis au frontend
+      res.status(200).json({ film: filmResult[0], avis: avisResult });
+    });
+  });
+});
+
 // Route pour la page "mon-compte" - page utilisateur avec les avis
 app.get('/mon-compte.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'mon-compte.html'));

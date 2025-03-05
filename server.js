@@ -65,6 +65,40 @@ app.post('/register', (req, res) => {
   });
 });
 
+// Route de connexion
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  // Vérification de l'utilisateur
+  connection.query('SELECT * FROM utilisateurs WHERE email = ?', [email], (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la récupération de l\'utilisateur:', err);
+      return res.status(500).send('Erreur serveur');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    const user = results[0];
+
+    // Vérification du mot de passe
+    bcrypt.compare(password, user.mot_de_passe, (err, isMatch) => {
+      if (err) {
+        console.error('Erreur lors de la comparaison du mot de passe:', err);
+        return res.status(500).send('Erreur serveur');
+      }
+
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Mot de passe incorrect' });
+      }
+
+      // Connexion réussie
+      res.status(200).json({ message: 'Connexion réussie' });
+    });
+  });
+});
+
 // Routes pour les films, utilisateurs et avis
 // Assurez-vous que ces fichiers existent et exportent correctement leurs routes
 const filmsRoutes = require('./routes/filmsRoutes');
@@ -74,6 +108,11 @@ const reviewsRoutes = require('./routes/reviewsRoutes');
 app.use('/api/films', filmsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/reviews', reviewsRoutes);
+
+// Route pour la page "mon-compte" - page utilisateur avec les avis
+app.get('/mon-compte.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'mon-compte.html'));
+});
 
 // Démarrer le serveur
 app.listen(port, () => {

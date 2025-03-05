@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de Films & Séries</title>
+    <link rel="stylesheet" href="css/search.css">
+    <script defer src="js/search.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="search.html">Recherche</a></li>
+                <li><a href="user.html">Espace Utilisateur</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="search-section">
+            <input type="text" id="search-bar" placeholder="Rechercher un film ou une série...">
+            <div class="suggestions" id="suggestions"></div>
+        </section>
+        
+        <section class="results">
+            <h2>Résultats de la recherche</h2>
+            <div class="movies-list" id="movies-list">
+                <!-- Résultats affichés ici dynamiquement -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Recommandation Films & Séries</p>
+    </footer>
+</body>
+</html>

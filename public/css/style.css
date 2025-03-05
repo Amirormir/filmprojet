@@ -1,0 +1,125 @@
+/* Reset de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navigation */
+header {
+    background: #222;
+    padding: 10px 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Section principale */
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero h1 {
+    font-size: 2rem;
+}
+
+.hero p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+/* Bouton de recherche */
+.search-btn {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.search-btn .btn {
+    background: #28a745; /* Couleur verte pour le bouton */
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.search-btn .btn:hover {
+    background: #218838; /* Couleur au survol */
+}
+
+/* Films recommandés */
+.random-movies h2 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.movies-list {
+    display: flex;
+    flex-wrap: wrap; /* Permet de passer à la ligne suivante si nécessaire */
+    justify-content: space-around; /* Espacement égal entre les éléments */
+    gap: 20px; /* Espace entre les éléments */
+    margin-top: 20px;
+}
+
+.movie {
+    width: 200px; /* Largeur fixe pour chaque film */
+    text-align: center;
+}
+
+.movie img {
+    width: 100%; /* L'image prend toute la largeur de la div */
+    height: auto;
+    border-radius: 8px; /* Bord arrondi des images */
+}
+
+.movie p {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Pied de page */
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #222;
+    color: #fff;
+    margin-top: 20px;
+}

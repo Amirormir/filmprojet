@@ -94,7 +94,7 @@ nav ul li a {
 .movies-list {
     display: flex;
     flex-wrap: wrap; /* Permet de passer à la ligne suivante si nécessaire */
-    justify-content: space-around; /* Espacement égal entre les éléments */
+    justify-content: center; /* Centrer les films */
     gap: 20px; /* Espace entre les éléments */
     margin-top: 20px;
 }
@@ -102,17 +102,26 @@ nav ul li a {
 .movie {
     width: 200px; /* Largeur fixe pour chaque film */
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre pour les cartes de film */
+    border-radius: 8px; /* Bord arrondi des films */
+    background: #fff; /* Fond blanc pour les cartes de film */
+    transition: transform 0.2s ease-in-out; /* Animation au survol */
+}
+
+.movie:hover {
+    transform: scale(1.05); /* Agrandir légèrement au survol */
 }
 
 .movie img {
     width: 100%; /* L'image prend toute la largeur de la div */
     height: auto;
-    border-radius: 8px; /* Bord arrondi des images */
+    border-radius: 8px 8px 0 0; /* Bord arrondi en haut de l'image */
 }
 
 .movie p {
     margin-top: 10px;
     font-weight: bold;
+    font-size: 1rem;
 }
 
 /* Pied de page */

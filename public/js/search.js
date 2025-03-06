@@ -3,9 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const suggestionsContainer = document.getElementById('suggestions');
     const moviesList = document.getElementById('movies-list');
 
-    // Clé API TMDB
-    const apiKey = 'abab33fe124bed5ea997bfb0f452e3d2';  // Remplace par ta clé API réelle
-
     // Fonction pour afficher les résultats de recherche
     async function searchMovies(query) {
         if (query.length < 3) {
@@ -14,29 +11,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            // Faire une requête à l'API TMDB
-            const response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${query}&language=fr-FR`);
+            // Appel à la base de données pour rechercher des films
+            const response = await fetch(`/api/films/search?query=${query}`);
             const data = await response.json();
 
             // Vider la liste des suggestions
             suggestionsContainer.innerHTML = '';
             moviesList.innerHTML = '';
 
-            if (data.results.length > 0) {
-                // Afficher les films et séries dans la liste des résultats
-                data.results.forEach(result => {
+            if (data.length > 0) {
+                // Afficher les films dans la liste des résultats
+                data.forEach(movie => {
                     const card = document.createElement('div');
                     card.classList.add('movie-card');
 
                     const img = document.createElement('img');
-                    img.src = `https://image.tmdb.org/t/p/w500${result.poster_path}`;
-                    img.alt = result.title || result.name;
+                    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+                    img.alt = movie.title;
 
                     const title = document.createElement('h3');
-                    title.innerText = result.title || result.name;
+                    title.innerText = movie.title;
 
                     const overview = document.createElement('p');
-                    overview.innerText = result.overview ? result.overview.slice(0, 150) + '...' : 'Aucune description disponible';
+                    overview.innerText = movie.overview ? movie.overview.slice(0, 150) + '...' : 'Aucune description disponible';
 
                     card.appendChild(img);
                     card.appendChild(title);

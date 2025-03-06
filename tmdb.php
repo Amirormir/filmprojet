@@ -1,4 +1,5 @@
 <?php
+/*
 $apiKey = 'abab33fe124bed5ea997bfb0f452e3d2';
 $baseUrl = 'https://api.themoviedb.org/3/';
 $host = 'localhost'; // Le nom de l'hôte (localhost)
@@ -14,6 +15,7 @@ try {
     die("Connection échouée : " . $e->getMessage());
 }
 
+// Fonction pour récupérer les données d'un film via l'API TMDB
 function getMovieData($movieId) {
     global $apiKey, $baseUrl;
 
@@ -47,4 +49,5 @@ if ($movieData) {
 } else {
     echo "Erreur lors de la récupération des données.";
 }
+*/
 ?>

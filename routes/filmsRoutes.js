@@ -85,4 +85,23 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+// Nouvelle route : Rechercher des films par titre
+router.get('/search', (req, res) => {
+    const query = req.query.query; // Récupérer le paramètre de la requête
+
+    if (!query) {
+        return res.status(400).json({ message: 'Aucun terme de recherche fourni' });
+    }
+
+    // Requête SQL pour rechercher des films par titre (partiel, insensible à la casse)
+    connection.query(
+        'SELECT * FROM films_series WHERE titre LIKE ?',
+        [`%${query}%`], // Utilisation de LIKE pour faire une recherche partielle
+        (err, results) => {
+            if (err) return res.status(500).send('Erreur serveur');
+            res.json(results);
+        }
+    );
+});
+
 module.exports = router;

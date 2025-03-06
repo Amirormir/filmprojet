@@ -1,59 +1,61 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const searchBar = document.getElementById('search-bar');
-    const suggestionsContainer = document.getElementById('suggestions');
-    const moviesList = document.getElementById('movies-list');
-
-    // Fonction pour afficher les résultats de recherche
-    async function searchMovies(query) {
-        if (query.length < 3) {
-            suggestionsContainer.innerHTML = '';
-            return;  // N'afficher que si la requête est assez longue
+document.addEventListener('DOMContentLoaded', () => {
+    // Lorsque le DOM est prêt, on ajoute l'événement pour la barre de recherche
+    document.getElementById('search-bar').addEventListener('input', (event) => {
+        const query = event.target.value;
+        if (query.length > 2) {  // On commence à chercher après 3 caractères
+            searchMovies(query);
         }
-
-        try {
-            // Appel à la base de données pour rechercher des films
-            const response = await fetch(`/api/films/search?query=${query}`);
-            const data = await response.json();
-
-            // Vider la liste des suggestions
-            suggestionsContainer.innerHTML = '';
-            moviesList.innerHTML = '';
-
-            if (data.length > 0) {
-                // Afficher les films dans la liste des résultats
-                data.forEach(movie => {
-                    const card = document.createElement('div');
-                    card.classList.add('movie-card');
-
-                    const img = document.createElement('img');
-                    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                    img.alt = movie.title;
-
-                    const title = document.createElement('h3');
-                    title.innerText = movie.title;
-
-                    const overview = document.createElement('p');
-                    overview.innerText = movie.overview ? movie.overview.slice(0, 150) + '...' : 'Aucune description disponible';
-
-                    card.appendChild(img);
-                    card.appendChild(title);
-                    card.appendChild(overview);
-
-                    // Ajouter la carte à la liste des films
-                    moviesList.appendChild(card);
-                });
-            } else {
-                moviesList.innerHTML = '<p>Aucun résultat trouvé.</p>';
-            }
-
-        } catch (error) {
-            console.error('Erreur lors de la récupération des films:', error);
-        }
-    }
-
-    // Écouter l'événement de saisie dans le champ de recherche
-    searchBar.addEventListener('input', () => {
-        const query = searchBar.value;
-        searchMovies(query);
     });
 });
+
+// Fonction pour rechercher des films
+async function searchMovies(query) {
+    try {
+        const response = await fetch(`/api/films_series/search?query=${encodeURIComponent(query)}`);
+
+        if (!response.ok) {
+            throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log(data); // Affiche les résultats dans la console ou traite-les dans l'application
+
+        // Affichage des résultats dans la page HTML
+        const moviesList = document.getElementById('movies-list');
+        moviesList.innerHTML = ''; // Vider la liste avant d'ajouter les nouveaux résultats
+
+        // Remplir la liste avec les films récupérés
+        data.forEach(movie => {
+            const movieItem = document.createElement('div');
+            movieItem.classList.add('movie-item');
+
+            // Créer l'élément image pour chaque film
+            const movieImage = document.createElement('img');
+            movieImage.src = movie.image_url;  // L'URL de l'image
+            movieImage.alt = movie.titre;  // Texte alternatif pour l'image
+
+            // Créer l'élément titre du film
+            const movieTitle = document.createElement('h3');
+            movieTitle.textContent = movie.titre;
+
+            // Créer l'élément description du film
+            const movieDescription = document.createElement('p');
+            movieDescription.textContent = movie.description || "Aucune description disponible.";
+
+            // Créer l'élément note du film
+            const movieRating = document.createElement('p');
+            movieRating.innerHTML = `<strong>Note:</strong> ${movie.note_moyenne}`;
+
+            // Ajouter l'image, le titre, la description, et la note au div de chaque film
+            movieItem.appendChild(movieImage);
+            movieItem.appendChild(movieTitle);
+            movieItem.appendChild(movieDescription);
+            movieItem.appendChild(movieRating);
+
+            // Ajouter l'élément div au conteneur des films
+            moviesList.appendChild(movieItem);
+        });
+    } catch (error) {
+        console.error("Erreur lors de la récupération des films:", error);
+    }
+}

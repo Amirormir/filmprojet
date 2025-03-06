@@ -112,6 +112,32 @@ router.get('/popular', (req, res) => {
     });
 });
 
+
+// Nouvelle route pour rechercher des films
+app.get('/api/films_series/search', (req, res) => {
+  const query = req.query.query; // Récupère la requête de recherche depuis l'URL
+
+  // Requête SQL pour rechercher des films dont le titre contient la requête
+  const sqlQuery = 'SELECT * FROM films_series WHERE titre LIKE ?'; // Modifie 'title' par le nom exact de la colonne dans ta base de données
+  
+  // Exécuter la requête
+  connection.query(sqlQuery, [`%${query}%`], (err, results) => {
+    if (err) {
+      console.error('❌ Erreur lors de la recherche des films:', err);
+      return res.status(500).send('Erreur serveur');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Aucun film trouvé" });
+    }
+
+    console.log("✅ Résultats de la recherche :", results);
+    res.json(results); // Renvoyer les films trouvés
+  });
+});
+
+
+
 app.use('/api/films_series', router); // Ajout de la route films_series/popular
 
 // Démarrer le serveur

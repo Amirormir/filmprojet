@@ -1,29 +1,70 @@
-body {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-}
-
-#user-info {
-    background: #f3f3f3;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-button {
-    background: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.review {
-    background: #f9f9f9;
-    padding: 10px;
-    margin: 10px 0;
-    border-left: 5px solid #007bff;
-}
+  }
+  
+  header {
+      background: #222;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+  }
+  
+  nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+  }
+  
+  nav ul li {
+      margin: 0 15px;
+  }
+  
+  nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+  }
+  
+  body {
+      background: #f8f9fa;
+      padding-top: 60px; /* Ajuste en fonction de la hauteur du header */
+      text-align: center;
+  }
+  
+  h1, h2 {
+      margin: 20px 0;
+  }
+  
+  #user-info {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      margin: 20px auto;
+      text-align: center;
+  }
+  
+  button {
+      background: #007BFF;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+  }
+  
+  button:hover {
+      background: #0056b3;
+  }
+  
+  #reviews-container {
+      margin-top: 20px;
+  }

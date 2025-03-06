@@ -64,7 +64,7 @@ nav ul li a {
 }
 
 .movie-card {
-    width: 200px;
+    width: 160px; /* Réduction de la largeur pour que les images soient plus petites */
     margin: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -72,27 +72,32 @@ nav ul li a {
     overflow: hidden;
     background-color: #fff;
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .movie-card img {
-    width: 100%;
-    height: auto;
+    width: 100%; /* L'image prend toute la largeur de la carte */
+    height: 150px; /* Réduction de la hauteur de l'image à 150px */
+    object-fit: cover; /* Pour que l'image soit bien recadrée */
 }
 
 .movie-card h3 {
-    font-size: 18px;
+    font-size: 16px; /* Réduction de la taille du texte pour qu'il soit plus lisible avec des images plus petites */
     margin: 10px 0;
+    color: #333;
 }
 
 .movie-card p {
-    font-size: 14px;
+    font-size: 12px; /* Réduction de la taille du texte */
     color: #555;
     margin: 10px;
     padding: 0 10px;
 }
 
+/* Effet au survol de la carte du film */
 .movie-card:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px); /* Décale légèrement la carte au survol */
 }
 
 /* Style pour la section footer */

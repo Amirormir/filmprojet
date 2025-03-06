@@ -13,7 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             moviesList.innerHTML = '';
 
-            data.forEach(movie => {
+            // Limiter à 5 films
+            const top5Movies = data.slice(0, 5); // Ne prendre que les 5 premiers films
+
+            top5Movies.forEach(movie => {
                 const movieCard = document.createElement('div');
                 movieCard.classList.add('movie');
 

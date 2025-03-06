@@ -41,13 +41,18 @@ router.get('/:id', (req, res) => {
 
 // Route : Récupérer les films populaires
 router.get('/popular', (req, res) => {
-    console.log("🔥 Route /api/films/popular appelée");
+    console.log("🔥 Route /api/films_series/popular appelée");
     
     connection.query('SELECT * FROM films_series ORDER BY note_moyenne DESC LIMIT 10', (err, results) => {
         if (err) {
             console.error('Erreur lors de la récupération des films populaires:', err);
             return res.status(500).send('Erreur serveur');
         }
+        if (results.length === 0) {
+            console.warn("⚠️ Aucun film trouvé !");
+            return res.status(404).json({ message: "Aucun film trouvé" });
+        }
+        console.log("✅ Films populaires récupérés :", results);
         res.json(results);
     });
 });

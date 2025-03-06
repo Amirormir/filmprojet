@@ -30,11 +30,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes API
-const filmsRoutes = require('./routes/filmsRoutes');
+const filmsRoutes = require('./routes/filmsRoutes');  // Pas de modification ici
 const usersRoutes = require('./routes/usersRoutes');
 const reviewsRoutes = require('./routes/reviewsRoutes');
 
-app.use('/api/films', filmsRoutes);
+app.use('/api/films', filmsRoutes);  // Cette route ne doit pas changer
 app.use('/api/users', usersRoutes);
 app.use('/api/reviews', reviewsRoutes);
 
@@ -88,6 +88,31 @@ app.post('/login', (req, res) => {
     });
   });
 });
+
+// Route pour récupérer les films populaires (modification ici)
+const router = require('express').Router();
+
+// Route : Récupérer les films populaires
+router.get('/popular', (req, res) => {
+    console.log("🔥 Route /api/films_series/popular appelée");
+
+    connection.query('SELECT * FROM films_series ORDER BY note_moyenne DESC LIMIT 10', (err, results) => {
+        if (err) {
+            console.error('❌ Erreur lors de la récupération des films populaires:', err);
+            return res.status(500).send('Erreur serveur');
+        }
+
+        if (results.length === 0) {
+            console.warn("⚠️ Aucun film trouvé !");
+            return res.status(404).json({ message: "Aucun film trouvé" });
+        }
+
+        console.log("✅ Films populaires récupérés :", results);
+        res.json(results);
+    });
+});
+
+app.use('/api/films_series', router); // Ajout de la route films_series/popular
 
 // Démarrer le serveur
 app.listen(port, () => {

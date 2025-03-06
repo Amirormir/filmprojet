@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchRecommendedMovies() {
         try {
-            const response = await fetch('/api/films/popular');
+            // Mise à jour de l'URL ici : /api/films_series/popular
+            const response = await fetch('/api/films_series/popular');
 
             if (!response.ok) throw new Error('Erreur lors de la récupération des films');
 
